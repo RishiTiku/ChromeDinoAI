@@ -9,7 +9,9 @@ class Dino{
   int size = 20;
   int ctr = 1;
   int a = 0;
+  int DuckState = 30;
   boolean duck= false;
+  int HiScore = 0;
 
 
   //---------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -44,7 +46,30 @@ class Dino{
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------
-  //show the dino
+  //show the dead dino
+  void showDead() {
+    if (duck && posY == 0) {
+      if (runCount < 0) {
+
+        image(dinoDuck, playerXpos - dinoDuck.width/2, height - groundHeight - (posY + dinoDuck.height));
+      } else {
+
+        image(dinoDuck1, playerXpos - dinoDuck1.width/2, height - groundHeight - (posY + dinoDuck1.height));
+      }
+    } else
+      if (posY ==0) {
+        if (runCount < 0) {
+          image(dinoRun1, playerXpos - dinoRun1.width/2, height - groundHeight - (posY + dinoRun1.height));
+        } else {
+          image(dinoRun2, playerXpos - dinoRun2.width/2, height - groundHeight - (posY + dinoRun2.height));
+        }
+      } else {
+        image(dinoJump, playerXpos - dinoJump.width/2, height - groundHeight - (posY + dinoJump.height));
+      }
+    }
+  
+//---------------------------------------------------------------------------------------------------------
+//show the dino
   void show() {
     if (duck && posY == 0) {
       if (runCount < 0) {
@@ -96,12 +121,12 @@ void jump(boolean bigJump) {
   void update() {
     incrementCounters();
     if(duck==true)
-      {
-          if(ctr%(20+a)==0)
+      {  
+        if(ctr%(DuckState)==0)
           {
             ducking(false);
             ctr = 1;
-            a = 0;
+            DuckState = 30;
           }
           else
           ctr++;
@@ -116,5 +141,7 @@ void jump(boolean bigJump) {
     if(lifespan%3==0){
       score+=1;
     }
+    if(score>HiScore)
+      HiScore++;
   }
 }

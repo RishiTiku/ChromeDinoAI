@@ -37,6 +37,19 @@ class Bird {
       
     }
   }
+    void showDead() {
+    
+    if (flapCount < 0) {//flap the berd
+      image(bird,posX-bird.width/2,height - groundHeight - (posY + bird.height-20));
+    } else {
+      image(bird1,posX-bird1.width/2,height - groundHeight - (posY + bird1.height-20));
+    }
+    if(flapCount > 15){
+     flapCount = -15; 
+      
+    }
+  }
+
 //------------------------------------------------------------------------------------------------------------------------------------------------------
   //move the bard
   void move(float speed) {

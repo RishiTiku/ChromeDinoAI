@@ -72,6 +72,9 @@ class Player {
     if (lifespan % 3 ==0) {
       score+=1;
     }
+    if(score>bestScore)
+    bestScore++;
+    
   }
 
 

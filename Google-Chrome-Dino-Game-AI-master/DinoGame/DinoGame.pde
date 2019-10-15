@@ -136,12 +136,13 @@ void writeInfo() {
     //text(, width/2-180, height-30);
     textAlign(RIGHT);
     text("Gen: " + (genPlayerTemp.gen +1), width -40, height-30);
+    text("HiScore: "+pop.bestScore, width/2, height -30);
     textSize(20);
     int x = 580;
     text("Distance to next obstacle", x, 18+44.44444);
-    text("Hieght of obstacle", x, 18+2*44.44444);
+    text("Height of obstacle", x, 18+2*44.44444);
     text("Width of obstacle", x, 18+3*44.44444);
-    text("Bird hieght", x, 18+4*44.44444);
+    text("Bird height", x, 18+4*44.44444);
     text("Speed", x, 18+5*44.44444);
     text("Player's Y position", x, 18+6*44.44444);
     text("Gap between obstacles", x, 18+7*44.44444);
@@ -155,14 +156,17 @@ void writeInfo() {
     text("Score: " + floor(pop.populationLife/3.0), 30, height - 30);
     //text(, width/2-180, height-30);
     textAlign(RIGHT);
-
     text("Gen: " + (pop.gen +1), width -40, height-30);
+    textAlign(CENTER);
+    textSize(30);
+    text("HiScore: "+pop.bestScore, width/2, height -30);
     textSize(20);
+    textAlign(RIGHT);
     int x = 580;
     text("Distance to next obstacle", x, 18+44.44444);
-    text("Hieght of obstacle", x, 18+2*44.44444);
+    text("Height of obstacle", x, 18+2*44.44444);
     text("Width of obstacle", x, 18+3*44.44444);
-    text("Bird hieght", x, 18+4*44.44444);
+    text("Bird height", x, 18+4*44.44444);
     text("Speed", x, 18+5*44.44444);
     text("Player's Y position", x, 18+6*44.44444);
     text("Gap between obstacles", x, 18+7*44.44444);

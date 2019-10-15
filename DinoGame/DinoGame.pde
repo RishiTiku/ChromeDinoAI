@@ -2,11 +2,11 @@
 int nextConnectionNo = 1000;
 int frameSpeed = 60;
 
-
 //boolean showBestEachGen = false;
 //int upToGen = 0;
 
 boolean showNothing = false;
+boolean cont = false;
 
 
 //images
@@ -32,6 +32,7 @@ int minimumTimeBetweenObstacles = 60;
 int randomAddition = 0;
 int groundCounter = 0;
 float speed = 10;
+int flag = 0;
 
 int groundHeight = 250;
 int playerXpos = 150;
@@ -70,7 +71,17 @@ void draw() {
       d.update();
       d.show();//////////////////////////////////////////////////////////////////////////////////////
     } else {
-      resetObstacles();
+      showObstaclesDead();
+      d.showDead();
+      if(cont)
+      {
+        resetObstacles();
+        d.dead = false;
+        d.score = 0;
+        cont = false;
+        d.show();
+      }
+      
     }
   }
 
@@ -81,6 +92,12 @@ void writeInfo() {
   textAlign(LEFT);
   textSize(40);
     text("Score: " + d.score, 30 , height - 30);
+     textAlign(RIGHT);
+     text("HiScore: "+d.HiScore, width -40, height -30);
+    textAlign(CENTER);
+    textSize(30);
+     if(d.dead)
+    text("Press Y to play again!", width/2, height-30);
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -96,6 +113,10 @@ void drawToScreen() {
 //---------------------------------------------------------------------------------------------------------------------------------------------------------
 void keyPressed() {
   switch(key) {
+  case 'y':
+          if(d.dead==true)
+            cont = true;
+            break;
   case CODED://any of the arrow keys
     switch(keyCode) {
     case DOWN:
@@ -103,12 +124,14 @@ void keyPressed() {
                 {d.gravity = 3;
                 d.duck=true;}
                 else if(d.posY==0 && d.duck)
-                {d.a=20;}
+                {d.DuckState += 30;}
                 else if(d.posY==0)
                 {d.duck=true;
                 }break;
                 
     case UP: d.jump(true);
+             d.duck = false;
+             d.DuckState = 30;
              break;
       }
       break;
@@ -165,12 +188,34 @@ void moveObstacles() {
 //every so often add an obstacle 
 void addObstacle() {
   int tempInt;
-  if (d.lifespan > 1000 && random(1) < 0.15) { // 15% of the time add a bird/////////////////////
+  if (d.score>300 && random(1) < 0.15) { // 15% of the time add a bird/////////////////////
     tempInt = floor(random(3));
     Bird temp = new Bird(tempInt);//floor(random(3)));
     birds.add(temp);
   } else {//otherwise add a cactus
-    tempInt = floor(random(3));
+    if(d.score<=90)
+    {
+      tempInt = 0;
+    }
+    else if(d.score<=190 && d.score>90)
+    {
+      if(flag==0)
+      {
+          tempInt = 1;
+          flag = 1;
+      }
+      else
+      tempInt = floor(random(1.9));
+    }
+    else
+    {if(flag==1)
+      {
+          tempInt = 2;
+          flag = 0;
+      }
+      else
+      tempInt = floor(random(3));
+    }
     Obstacle temp = new Obstacle(tempInt);//floor(random(3)));
     obstacles.add(temp);
     tempInt+=3;
@@ -194,6 +239,20 @@ void showObstacles() {
 
   for (int i = 0; i< birds.size(); i++) {
     birds.get(i).show();
+  }
+}
+
+//what do you think this does?
+void showObstaclesDead() {
+  for (int i = 0; i< grounds.size(); i++) {
+    grounds.get(i).show();
+  }
+  for (int i = 0; i< obstacles.size(); i++) {
+    obstacles.get(i).show();
+  }
+
+  for (int i = 0; i< birds.size(); i++) {
+    birds.get(i).showDead();
   }
 }
 
