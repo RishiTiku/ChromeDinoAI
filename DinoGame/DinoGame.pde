@@ -33,6 +33,7 @@ int randomAddition = 0;
 int groundCounter = 0;
 float speed = 10;
 int flag = 0;
+boolean pause = true;
 
 int groundHeight = 250;
 int playerXpos = 150;
@@ -66,24 +67,30 @@ void setup() {
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 void draw() {
   drawToScreen();
-    if (!d.dead) {//if any players are alive then update them
+    if (!d.dead && pause==false){
       updateObstacles();
       d.update();
       d.show();//////////////////////////////////////////////////////////////////////////////////////
-    } else {
+    }else if(!d.dead && pause == true)
+    {
+      showObstaclesDead();
+      d.showDead();
+    }
+    else
       showObstaclesDead();
       d.showDead();
       if(cont)
       {
         resetObstacles();
         d.dead = false;
+        pause = false;
         d.score = 0;
         cont = false;
         d.show();
       }
       
     }
-  }
+  
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //writes info about the current player
@@ -98,6 +105,10 @@ void writeInfo() {
     textSize(30);
      if(d.dead)
     text("Press Y to play again!", width/2, height-30);
+    else if(pause)
+    text("Press P to start the game!", width/2, height-30);
+    else if(!pause)
+    text("Press P to pause the game!", width/2, height-30);
 }
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -117,9 +128,10 @@ void keyPressed() {
           if(d.dead==true)
             cont = true;
             break;
+  case 'p': pause = !pause;
   case CODED://any of the arrow keys
     switch(keyCode) {
-    case DOWN:
+    case DOWN:  if(!d.dead){
                 if(d.posY>0)
                 {d.gravity = 3;
                 d.duck=true;}
@@ -127,11 +139,13 @@ void keyPressed() {
                 {d.DuckState += 30;}
                 else if(d.posY==0)
                 {d.duck=true;
-                }break;
+                }}break;
                 
-    case UP: d.jump(true);
+    case UP: if(!d.dead){
+             d.jump(true);
              d.duck = false;
              d.DuckState = 30;
+             }
              break;
       }
       break;
@@ -188,7 +202,7 @@ void moveObstacles() {
 //every so often add an obstacle 
 void addObstacle() {
   int tempInt;
-  if (d.score>300 && random(1) < 0.15) { // 15% of the time add a bird/////////////////////
+  if (d.score>300 && random(1) < d.rand) { // 15% of the time add a bird/////////////////////
     tempInt = floor(random(3));
     Bird temp = new Bird(tempInt);//floor(random(3)));
     birds.add(temp);
