@@ -136,6 +136,7 @@ void writeInfo() {
     //text(, width/2-180, height-30);
     textAlign(RIGHT);
     text("Gen: " + (genPlayerTemp.gen +1), width -40, height-30);
+    textAlign(CENTER);
     text("HiScore: "+pop.bestScore, width/2, height -30);
     textSize(20);
     int x = 580;
