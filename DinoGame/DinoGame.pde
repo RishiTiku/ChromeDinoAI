@@ -132,7 +132,7 @@ void keyPressed() {
   case CODED://any of the arrow keys
     switch(keyCode) {
     case DOWN:  if(pause)
-                  {
+                  {break;
                   }
                   else
                   {
@@ -146,7 +146,7 @@ void keyPressed() {
                 {d.duck=true;
                 }}break;}
                 
-    case UP: if(pause){}
+    case UP: if(pause){break;}
               else{
              if(!d.dead){
              d.jump(true);
