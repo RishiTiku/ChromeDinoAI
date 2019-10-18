@@ -131,7 +131,12 @@ void keyPressed() {
   case 'p': pause = !pause;
   case CODED://any of the arrow keys
     switch(keyCode) {
-    case DOWN:  if(!d.dead){
+    case DOWN:  if(pause)
+                  {
+                  }
+                  else
+                  {
+                if(!d.dead){
                 if(d.posY>0)
                 {d.gravity = 3;
                 d.duck=true;}
@@ -139,15 +144,17 @@ void keyPressed() {
                 {d.DuckState += 30;}
                 else if(d.posY==0)
                 {d.duck=true;
-                }}break;
+                }}break;}
                 
-    case UP: if(!d.dead){
+    case UP: if(pause){}
+              else{
+             if(!d.dead){
              d.jump(true);
              d.duck = false;
              d.DuckState = 30;
              }
              break;
-      }
+      }}
       break;
     }
   }
