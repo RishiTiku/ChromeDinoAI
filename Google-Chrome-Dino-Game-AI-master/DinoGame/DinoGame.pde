@@ -66,6 +66,9 @@ void setup() {
 void draw() {
   drawToScreen();
   if (showBestEachGen) {//show the best of each gen
+  genPlayerTemp.showFlag = 1;
+  for(int i=0;i<pop.pop.size();i++)
+    pop.pop.get(i).showFlag = 0;
     if (!genPlayerTemp.dead) {//if current gen player is not dead then update it
       genPlayerTemp.updateLocalObstacles();
       genPlayerTemp.look();
@@ -81,7 +84,10 @@ void draw() {
         genPlayerTemp = pop.genPlayers.get(upToGen).cloneForReplay();
       }
     }
-  } else {//if just evolving normally
+  } //if just evolving normally
+  if(!showBestEachGen){
+      for(int i=0;i<pop.pop.size();i++)
+    pop.pop.get(i).showFlag = 1;}
     if (!pop.done()) {//if any players are alive then update them
       updateObstacles();
       pop.updateAlive();
@@ -90,7 +96,6 @@ void draw() {
       pop.naturalSelection();
       resetObstacles();
     }
-  }
 }
 
 
@@ -135,6 +140,7 @@ void writeInfo() {
     //text(, width/2-180, height-30);
     textAlign(RIGHT);
     text("Generation: " + (genPlayerTemp.gen +1), width -40, height-30);
+    text("Replay Mode",width - 40, height-70);
     textAlign(CENTER);
     textSize(30);
     text("HiScore: "+pop.bestScore, width/2, height -30);
@@ -209,9 +215,12 @@ void keyPressed() {
     }
     break;
   case 'g'://show generations
-    showBestEachGen = !showBestEachGen;
-    upToGen = 0;
+  if (!(pop.genPlayers.size()==0)){
+    showBestEachGen = !showBestEachGen;}
+    if(showBestEachGen)
+    {upToGen = 0;
     genPlayerTemp = pop.genPlayers.get(upToGen).cloneForReplay();
+  }
     break;
   case 'p'://show absolutely nothing in order to speed up computation
     showNothing = !showNothing;
@@ -246,14 +255,16 @@ void updateObstacles() {
   if (obstacleTimer > minimumTimeBetweenObstacles + randomAddition) { //if the obstacle timer is high enough then add a new obstacle
     addObstacle();
   }
+  if(!showBestEachGen){
   groundCounter ++;
   if (groundCounter> 10) { //every 10 frames add a ground bit
     groundCounter =0;
     grounds.add(new Ground());
   }
+  }
 
   moveObstacles();//move everything
-  if (!showNothing) {//show everything
+  if (!showNothing&&!showBestEachGen) {//show everything
     showObstacles();
   }
 }
@@ -276,14 +287,14 @@ void moveObstacles() {
       birds.remove(i);
       i--;
     }
-  }
+  }if(!showBestEachGen)
   for (int i = 0; i < grounds.size(); i++) {
     grounds.get(i).move(speed);
     if (grounds.get(i).posX < -playerXpos) {
       grounds.remove(i);
       i--;
     }
-  }
+  }  
 }
 //------------------------------------------------------------------------------------------------------------------------------------------------------------
 //every so often add an obstacle 

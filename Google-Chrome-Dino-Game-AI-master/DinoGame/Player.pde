@@ -21,6 +21,7 @@ class Player {
   float gravity =1.2;
   int runCount = -5;
   int size = 20;
+  int showFlag = 1;
 
   ArrayList<Obstacle> replayObstacles = new ArrayList<Obstacle>();
   ArrayList<Bird> replayBirds = new ArrayList<Bird>();
@@ -42,6 +43,7 @@ class Player {
   //---------------------------------------------------------------------------------------------------------------------------------------------------------
   //show the dino
   void show() {
+    if(showFlag==1){
     if (duck && posY == 0) {
       if (runCount < 0) {
 
@@ -63,6 +65,7 @@ class Player {
     runCount++;
     if (runCount > 5) {
       runCount = -5;
+    }
     }
   }
   //---------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -407,8 +410,7 @@ class Player {
     localSpeed += 0.002;
     if (localObstacleTimer > minimumTimeBetweenObstacles + localRandomAddition) {
       addLocalObstacle();
-    }
-    groundCounter ++;
+    }groundCounter++;
     if (groundCounter > 10) {
       groundCounter =0;
       grounds.add(new Ground());
