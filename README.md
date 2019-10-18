@@ -7,6 +7,8 @@
   	• y - Start The Game Over Again 
 # for Google-Chrome-Dino-Game-AI-master/DinoGame/DinoGame.pde
   	• p - Stop the Graphics to Speeden up Computation
+    • + - To Increase the Frame Rate by 10 fps
+    • - - To Decrease the Frame Rate by 10 fps
   	• g - To See the Highlights of Dino Learning
     Under This Command There are some Subcommands
     	• → - Go to Next Improvement
