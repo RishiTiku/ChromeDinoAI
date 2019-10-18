@@ -82,6 +82,10 @@ void draw() {
       if(cont)
       {
         resetObstacles();
+        d.posY = 0;
+        d.gravity = 1.2;
+        d.velY = 0;
+        d.duck = false;
         d.dead = false;
         pause = false;
         d.score = 0;
