@@ -28,7 +28,6 @@ ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
 ArrayList<Bird> birds = new ArrayList<Bird>();
 ArrayList<Ground> grounds = new ArrayList<Ground>();
 
-
 int obstacleTimer = 0;
 int minimumTimeBetweenObstacles = 60;
 int randomAddition = 0;
@@ -135,11 +134,15 @@ void writeInfo() {
     text("Score: " + genPlayerTemp.score, 30, height - 30);
     //text(, width/2-180, height-30);
     textAlign(RIGHT);
-    text("Gen: " + (genPlayerTemp.gen +1), width -40, height-30);
+    text("Generation: " + (genPlayerTemp.gen +1), width -40, height-30);
     textAlign(CENTER);
+    textSize(30);
     text("HiScore: "+pop.bestScore, width/2, height -30);
+    text("Generation HiScore: "+pop.scores.get(genPlayerTemp.gen), width/2, height - 60);
+    textAlign(RIGHT);
     textSize(20);
     int x = 580;
+    fill(200);
     text("Distance to next obstacle", x, 18+44.44444);
     text("Height of obstacle", x, 18+2*44.44444);
     text("Width of obstacle", x, 18+3*44.44444);
@@ -153,11 +156,19 @@ void writeInfo() {
     text("Small Jump", 1220, 118);
     text("Big Jump", 1220, 218);
     text("Duck", 1220, 318);
+    textAlign(CENTER);
+    if(pop.scores.get(genPlayerTemp.gen)==pop.bestScore){
+      fill(1);
+      text("Best Generation",width/2, height - 90);
+      textSize(30);
+      text("HiScore: "+pop.bestScore, width/2, height -30);
+      text("Generation HiScore: "+pop.scores.get(genPlayerTemp.gen), width/2, height - 60);
+    }
   } else { //evolving normally 
     text("Score: " + floor(pop.populationLife/3.0), 30, height - 30);
     //text(, width/2-180, height-30);
     textAlign(RIGHT);
-    text("Gen: " + (pop.gen +1), width -40, height-30);
+    text("Generation: " + (pop.gen +1), width -40, height-30);
     textAlign(CENTER);
     textSize(30);
     text("HiScore: "+pop.bestScore, width/2, height -30);
@@ -202,7 +213,7 @@ void keyPressed() {
     upToGen = 0;
     genPlayerTemp = pop.genPlayers.get(upToGen).cloneForReplay();
     break;
-  case 'n'://show absolutely nothing in order to speed up computation
+  case 'p'://show absolutely nothing in order to speed up computation
     showNothing = !showNothing;
     break;
   case CODED://any of the arrow keys
@@ -217,10 +228,16 @@ void keyPressed() {
         }
         break;
       }
+    case LEFT:
+      if (showBestEachGen&&upToGen>0) {//if showing the best player each generation then move on to the next generation
+        upToGen--;
+        genPlayerTemp = pop.genPlayers.get(upToGen).cloneForReplay();
+        }
+        break;
+      }
       break;
     }
   }
-}
 //---------------------------------------------------------------------------------------------------------------------------------------------------------
 //called every frame
 void updateObstacles() {

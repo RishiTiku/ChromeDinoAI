@@ -2,7 +2,9 @@ class Population {
   ArrayList<Player> pop = new ArrayList<Player>();
   Player bestPlayer;//the best ever player 
   int bestScore =0;//the score of the best ever player
+  int bestGen = 0;
   int gen;
+  ArrayList<Integer> scores = new ArrayList<Integer>();
   ArrayList<connectionHistory> innovationHistory = new ArrayList<connectionHistory>();
   ArrayList<Player> genPlayers = new ArrayList<Player>();
   ArrayList<Species> species = new ArrayList<Species>();
@@ -54,7 +56,7 @@ class Population {
   void setBestPlayer() {
     Player tempBest =  species.get(0).players.get(0);
     tempBest.gen = gen;
-
+    scores.add(tempBest.score);
 
     //if best this gen is better than the global best score then set the global best as the best this gen
 
@@ -64,6 +66,7 @@ class Population {
       println("new best:", tempBest.score);
       bestScore = tempBest.score;
       bestPlayer = tempBest.cloneForReplay();
+      bestGen = tempBest.gen;
     }
   }
 
