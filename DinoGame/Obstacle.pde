@@ -15,7 +15,7 @@ class Obstacle {
       break;
     case 1://big cactus
       w = 60;
-      h = 120;
+      h = 110;
       break;
     case 2://small cacti
       w = 120;

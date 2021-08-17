@@ -9,7 +9,6 @@ class Dino{
   int size = 20;
   int ctr = 1;
   int a = 0;
-  float rand = 0.15;
   int DuckState = 30;
   boolean duck= false;
   int HiScore = 0;
@@ -142,10 +141,7 @@ void jump(boolean bigJump) {
     if(lifespan%3==0){
       score+=1;
     }
-    if(score>HiScore){
+    if(score>HiScore)
       HiScore++;
-    }
-    if(score%1000==0 && score!=0 && rand<=0.03)
-    rand += 0.03;
   }
 }
