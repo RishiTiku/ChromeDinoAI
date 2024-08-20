@@ -16,5 +16,3 @@
     	 • → - Go to Next Improvement
     	 • ← - Go to Previous Improvement
  Pressing Esc key will Terminate the JRE permanently. Use Alt + Tab to Switch between Windows.
-# Many Thanks to Code Bullet(https://github.com/Code-Bullet/) for making this Program. I don't own it. This Repository is Just an Improvement.
-# :)
